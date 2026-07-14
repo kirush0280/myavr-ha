@@ -1,0 +1,61 @@
+{
+  "entity": {
+    "sensor": {
+      "mains_l1":              {"default": "mdi:lightning-bolt"},
+      "mains_l2":              {"default": "mdi:lightning-bolt"},
+      "mains_l3":              {"default": "mdi:lightning-bolt"},
+      "gen_l1":                {"default": "mdi:engine"},
+      "gen_l2":                {"default": "mdi:engine"},
+      "gen_l3":                {"default": "mdi:engine"},
+      "inverter_battery":      {"default": "mdi:battery"},
+      "mains_freq":            {"default": "mdi:sine-wave"},
+      "gen_freq":              {"default": "mdi:sine-wave"},
+      "engine_hours_current":  {"default": "mdi:clock-outline"},
+      "engine_hours_setpoint": {"default": "mdi:clock-alert-outline"},
+      "engine_hours_total":    {"default": "mdi:clock-time-eight-outline"},
+      "starts_since_oil":      {"default": "mdi:oil"},
+      "starts_total":          {"default": "mdi:counter"},
+      "contactor_position":    {"default": "mdi:electric-switch"},
+      "start_mode":            {"default": "mdi:cog"}
+    },
+    "binary_sensor": {
+      "no_errors":             {"default": "mdi:check-circle"},
+      "start_command_sent":    {"default": "mdi:play-circle-outline"},
+      "preventive_start_flag": {"default": "mdi:wrench-clock"},
+      "schedule_enabled":      {"default": "mdi:calendar-check"},
+      "schedule_inhibit":      {"default": "mdi:calendar-remove"},
+      "error_1":               {"default": "mdi:alert-circle"},
+      "error_2":               {"default": "mdi:alert-circle"},
+      "error_3":               {"default": "mdi:alert-circle"},
+      "error_4":               {"default": "mdi:alert-circle"},
+      "error_5":               {"default": "mdi:alert-circle"},
+      "error_6":               {"default": "mdi:alert-circle"},
+      "error_7":               {"default": "mdi:alert-circle"},
+      "error_8":               {"default": "mdi:alert-circle"},
+      "error_9":               {"default": "mdi:alert-circle"},
+      "error_10":              {"default": "mdi:alert-circle"},
+      "error_11":              {"default": "mdi:alert-circle"},
+      "error_12":              {"default": "mdi:alert-circle"},
+      "error_13":              {"default": "mdi:alert-circle"},
+      "error_14":              {"default": "mdi:alert-circle"},
+      "error_15":              {"default": "mdi:alert-circle"},
+      "error_16":              {"default": "mdi:alert-circle"},
+      "error_17":              {"default": "mdi:alert-circle"},
+      "error_18":              {"default": "mdi:alert-circle"},
+      "error_19":              {"default": "mdi:alert-circle"},
+      "error_20":              {"default": "mdi:alert-circle"}
+    },
+    "button": {
+      "start_generator": {"default": "mdi:play"},
+      "stop_generator":  {"default": "mdi:stop"},
+      "schedule_on":     {"default": "mdi:calendar-plus"},
+      "schedule_off":    {"default": "mdi:calendar-minus"}
+    },
+    "select": {
+      "start_mode": {"default": "mdi:cog-outline"}
+    }
+  },
+  "entity_component": {
+    "_": {"default": "mdi:transfer"}
+  }
+}

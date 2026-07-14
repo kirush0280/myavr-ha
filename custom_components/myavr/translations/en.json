@@ -1,0 +1,89 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure MyAVR ATS",
+        "description": "Enter connection parameters for the MyAVR controller",
+        "data": {
+          "host": "IP Address",
+          "port": "Modbus TCP Port",
+          "device_id": "Unit ID (Modbus)",
+          "scan_interval": "Poll Interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to the controller. Check IP address, port and device availability.",
+      "unknown": "Unknown error"
+    },
+    "abort": {
+      "already_configured": "Device already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "MyAVR Options",
+        "data": {
+          "scan_interval": "Poll Interval (seconds)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "mains_l1": {"name": "Mains L1"},
+      "mains_l2": {"name": "Mains L2"},
+      "mains_l3": {"name": "Mains L3"},
+      "gen_l1": {"name": "Generator L1"},
+      "gen_l2": {"name": "Generator L2"},
+      "gen_l3": {"name": "Generator L3"},
+      "inverter_battery": {"name": "Inverter Battery"},
+      "mains_freq": {"name": "Mains Frequency"},
+      "gen_freq": {"name": "Generator Frequency"},
+      "engine_hours_current": {"name": "Engine Hours Current"},
+      "engine_hours_setpoint": {"name": "Engine Hours Setpoint"},
+      "engine_hours_total": {"name": "Engine Hours Total"},
+      "starts_since_oil": {"name": "Starts Since Oil Change"},
+      "starts_total": {"name": "Total Starts"},
+      "contactor_position": {"name": "Contactor Position"},
+      "start_mode": {"name": "Start Mode"}
+    },
+    "binary_sensor": {
+      "no_errors": {"name": "No Errors"},
+      "start_command_sent": {"name": "Start Command Sent"},
+      "preventive_start_flag": {"name": "Preventive Start"},
+      "schedule_enabled": {"name": "Schedule Enabled"},
+      "schedule_inhibit": {"name": "Schedule Inhibit"},
+      "error_1": {"name": "Error 1"},
+      "error_2": {"name": "Error 2"},
+      "error_3": {"name": "Error 3"},
+      "error_4": {"name": "Error 4"},
+      "error_5": {"name": "Error 5"},
+      "error_6": {"name": "Error 6"},
+      "error_7": {"name": "Error 7"},
+      "error_8": {"name": "Error 8"},
+      "error_9": {"name": "Error 9"},
+      "error_10": {"name": "Error 10"},
+      "error_11": {"name": "Error 11"},
+      "error_12": {"name": "Error 12"},
+      "error_13": {"name": "Error 13"},
+      "error_14": {"name": "Error 14"},
+      "error_15": {"name": "Error 15"},
+      "error_16": {"name": "Error 16"},
+      "error_17": {"name": "Error 17"},
+      "error_18": {"name": "Error 18"},
+      "error_19": {"name": "Error 19"},
+      "error_20": {"name": "Error 20"}
+    },
+    "button": {
+      "start_generator": {"name": "Start Generator"},
+      "stop_generator": {"name": "Stop Generator"},
+      "schedule_on": {"name": "Enable Schedule"},
+      "schedule_off": {"name": "Disable Schedule"}
+    },
+    "select": {
+      "start_mode": {"name": "Start Mode"}
+    }
+  }
+}

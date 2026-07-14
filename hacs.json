@@ -1,0 +1,7 @@
+{
+  "name": "MyAVR ATS Controller",
+  "content_in_root": false,
+  "render_readme": true,
+  "homeassistant": "2026.3.0",
+  "zip_release": false
+}

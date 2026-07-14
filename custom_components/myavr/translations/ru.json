@@ -1,0 +1,89 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Настройка MyAVR ATS",
+        "description": "Введите параметры подключения к контроллеру MyAVR",
+        "data": {
+          "host": "IP-адрес",
+          "port": "Порт Modbus TCP",
+          "device_id": "Unit ID (Modbus)",
+          "scan_interval": "Интервал опроса (секунд)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Не удалось подключиться к контроллеру. Проверьте IP-адрес, порт и доступность устройства.",
+      "unknown": "Неизвестная ошибка"
+    },
+    "abort": {
+      "already_configured": "Устройство уже добавлено"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Настройки MyAVR",
+        "data": {
+          "scan_interval": "Интервал опроса (секунд)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "mains_l1": {"name": "Сеть L1"},
+      "mains_l2": {"name": "Сеть L2"},
+      "mains_l3": {"name": "Сеть L3"},
+      "gen_l1": {"name": "Генератор L1"},
+      "gen_l2": {"name": "Генератор L2"},
+      "gen_l3": {"name": "Генератор L3"},
+      "inverter_battery": {"name": "Батарея инвертора"},
+      "mains_freq": {"name": "Частота сети"},
+      "gen_freq": {"name": "Частота генератора"},
+      "engine_hours_current": {"name": "Моточасы текущие"},
+      "engine_hours_setpoint": {"name": "Моточасы уставка"},
+      "engine_hours_total": {"name": "Моточасы всего"},
+      "starts_since_oil": {"name": "Запуски с замены масла"},
+      "starts_total": {"name": "Запуски всего"},
+      "contactor_position": {"name": "Положение контактора"},
+      "start_mode": {"name": "Режим запуска"}
+    },
+    "binary_sensor": {
+      "no_errors": {"name": "Нет ошибок"},
+      "start_command_sent": {"name": "Команда запуска отправлена"},
+      "preventive_start_flag": {"name": "Профилактический запуск"},
+      "schedule_enabled": {"name": "Расписание включено"},
+      "schedule_inhibit": {"name": "Запрет запуска по расписанию"},
+      "error_1": {"name": "Ошибка 1"},
+      "error_2": {"name": "Ошибка 2"},
+      "error_3": {"name": "Ошибка 3"},
+      "error_4": {"name": "Ошибка 4"},
+      "error_5": {"name": "Ошибка 5"},
+      "error_6": {"name": "Ошибка 6"},
+      "error_7": {"name": "Ошибка 7"},
+      "error_8": {"name": "Ошибка 8"},
+      "error_9": {"name": "Ошибка 9"},
+      "error_10": {"name": "Ошибка 10"},
+      "error_11": {"name": "Ошибка 11"},
+      "error_12": {"name": "Ошибка 12"},
+      "error_13": {"name": "Ошибка 13"},
+      "error_14": {"name": "Ошибка 14"},
+      "error_15": {"name": "Ошибка 15"},
+      "error_16": {"name": "Ошибка 16"},
+      "error_17": {"name": "Ошибка 17"},
+      "error_18": {"name": "Ошибка 18"},
+      "error_19": {"name": "Ошибка 19"},
+      "error_20": {"name": "Ошибка 20"}
+    },
+    "button": {
+      "start_generator": {"name": "Запустить генератор"},
+      "stop_generator": {"name": "Остановить генератор"},
+      "schedule_on": {"name": "Включить расписание"},
+      "schedule_off": {"name": "Выключить расписание"}
+    },
+    "select": {
+      "start_mode": {"name": "Режим запуска"}
+    }
+  }
+}
