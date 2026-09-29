@@ -57,8 +57,5 @@
     "select": {
       "start_mode": {"default": "mdi:cog-outline"}
     }
-  },
-  "entity_component": {
-    "_": {"default": "mdi:transfer"}
   }
 }
