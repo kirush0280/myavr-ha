@@ -32,6 +32,8 @@
 - Контроллер MyAVR с прошивкой, поддерживающей Modbus TCP.
 - Сетевой доступ HA → контроллер по TCP:502.
 
+
+[![Добавить в HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=kirush0280&repository=myavr-ha&category=integration)
 ## Установка
 
 ### Через HACS (рекомендуется)
