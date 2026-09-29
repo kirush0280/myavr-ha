@@ -14,10 +14,11 @@
 
 ## Возможности
 
-- **46 сущностей** после установки: сеть L1/L2/L3, ген L1/L2/L3, частоты,
-  батарея инвертора, положение контактора, режим работы, моточасы (текущие,
-  до замены масла, общие), 20 отдельных индикаторов ошибок, флаги
-  расписания, кнопки старт/стоп/расписание.
+- **49 сущностей** после установки: сеть L1/L2/L3, ген L1/L2/L3, частоты,
+  батарея инвертора, положение контактора, режим работы, моточасы с замены
+  масла и общие, остаток до замены масла, предупреждение за 60 минут,
+  длительность текущего или последнего запуска, 20 отдельных индикаторов
+  ошибок, флаги расписания, кнопки старт/стоп/расписание.
 - **Русская локализация** для всех сущностей (имена + иконки).
 - **Локальный логотип и иконка** интеграции (HA 2026.3+ раздаёт через
   свой API, без внешних CDN).
@@ -77,20 +78,35 @@ Modbus, а не смещение от 30001/40001. Интеграция это �
 
 **Сенсоры (состояние / моточасы):**
 `sensor.myavr_contactor_position`, `sensor.myavr_start_mode`,
-`sensor.myavr_engine_hours_current`, `sensor.myavr_engine_hours_setpoint`,
-`sensor.myavr_engine_hours_total`, `sensor.myavr_starts_total`,
-`sensor.myavr_starts_since_oil`.
+`sensor.myavr_engine_hours_current` (моточасы с замены масла),
+`sensor.myavr_engine_hours_setpoint`, `sensor.myavr_engine_hours_total`,
+`sensor.myavr_oil_remaining`, `sensor.myavr_last_run_duration`,
+`sensor.myavr_starts_total`, `sensor.myavr_starts_since_oil`.
 
 **Бинарные сенсоры:**
 `binary_sensor.myavr_no_errors`, `binary_sensor.myavr_start_command_sent`,
 `binary_sensor.myavr_preventive_start_flag`,
 `binary_sensor.myavr_schedule_enabled`, `binary_sensor.myavr_schedule_inhibit`,
+`binary_sensor.myavr_oil_service_due`,
 `binary_sensor.myavr_error_1` … `binary_sensor.myavr_error_20`.
 
 **Кнопки:** `button.myavr_start_generator`, `button.myavr_stop_generator`,
 `button.myavr_schedule_on`, `button.myavr_schedule_off`.
 
 **Селектор режима:** `select.myavr_start_mode` (Ручной / Авто / Эко).
+
+### Масло и длительность запуска (1.1.0)
+
+- `30104` — минуты работы с замены масла, не длительность одного запуска.
+- `oil_remaining` = `max(30105 - 30104, 0)` минут.
+- `oil_service_due` включается при остатке **≤60 минут** либо ошибке OilService
+  (ошибка 6). Уведомление настраивается отдельно; интеграция сама ничего не отправляет.
+- `last_run_duration` измеряет время питания нагрузки от генератора по контактору,
+  а не полное время двигателя с прогревом и охлаждением. Во время запуска показывает
+  прошедшие минуты, после — последнее значение; точность ограничена периодом опроса.
+- Состояние сохраняется между перезапусками HA. При установке посреди запуска
+  или завершении запуска во время отключения HA длительность неизвестна: счётчик
+  не выдумывает время. До первого наблюдаемого запуска значение также неизвестно.
 
 ## Использование в автоматизациях
 

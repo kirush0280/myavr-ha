@@ -19,6 +19,7 @@ from homeassistant.const import (
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.util import dt as dt_util
 
 from . import MyAVRConfigEntry
 from .const import (
@@ -192,8 +193,14 @@ async def async_setup_entry(
     """Set up MyAVR sensors."""
     coordinator = entry.runtime_data
     async_add_entities(
-        MyAVRSensor(coordinator, entry.entry_id, description)
-        for description in SENSORS
+        [
+            MyAVROilRemainingSensor(coordinator, entry.entry_id),
+            MyAVRLastRunDurationSensor(coordinator, entry.entry_id),
+            *(
+                MyAVRSensor(coordinator, entry.entry_id, description)
+                for description in SENSORS
+            ),
+        ]
     )
 
 
@@ -221,3 +228,61 @@ class MyAVRSensor(MyAVREntity, SensorEntity):
         if raw is None:
             return None
         return self.entity_description.value_fn(raw)
+
+
+class MyAVROilRemainingSensor(MyAVREntity, SensorEntity):
+    """Remaining generator runtime before the configured oil service."""
+
+    _attr_translation_key = "oil_remaining"
+    _attr_device_class = SensorDeviceClass.DURATION
+    _attr_native_unit_of_measurement = UnitOfTime.MINUTES
+    _attr_state_class = SensorStateClass.MEASUREMENT
+
+    def __init__(self, coordinator: MyAVRCoordinator, entry_id: str) -> None:
+        """Initialize the sensor."""
+        super().__init__(coordinator, entry_id)
+        self._attr_unique_id = f"{entry_id}_oil_remaining"
+        self.entity_id = ENTITY_ID_FORMAT.format("myavr_oil_remaining")
+
+    @property
+    def native_value(self) -> int | None:
+        """Return remaining engine minutes before oil service."""
+        current = self.coordinator.data.get(REG_ENGINE_HOURS_CURRENT)
+        setpoint = self.coordinator.data.get(REG_ENGINE_HOURS_SETPOINT)
+        if current is None or setpoint is None:
+            return None
+        return max(setpoint - current, 0)
+
+
+class MyAVRLastRunDurationSensor(MyAVREntity, SensorEntity):
+    """Duration of the active or most recently completed generator run."""
+
+    _attr_translation_key = "last_run_duration"
+    _attr_device_class = SensorDeviceClass.DURATION
+    _attr_native_unit_of_measurement = UnitOfTime.MINUTES
+    _attr_state_class = SensorStateClass.MEASUREMENT
+
+    def __init__(self, coordinator: MyAVRCoordinator, entry_id: str) -> None:
+        """Initialize the sensor."""
+        super().__init__(coordinator, entry_id)
+        self._attr_unique_id = f"{entry_id}_last_run_duration"
+        self.entity_id = ENTITY_ID_FORMAT.format("myavr_last_run_duration")
+
+    @property
+    def native_value(self) -> int | None:
+        """Return elapsed minutes for the active run or the last duration."""
+        if self.coordinator.run_started_at is not None:
+            elapsed = dt_util.utcnow() - self.coordinator.run_started_at
+            return max(0, round(elapsed.total_seconds() / 60))
+        return self.coordinator.last_run_duration
+
+    @property
+    def extra_state_attributes(self) -> dict[str, str | None]:
+        """Expose the active run start for diagnostics."""
+        return {
+            "run_started_at": (
+                self.coordinator.run_started_at.isoformat()
+                if self.coordinator.run_started_at
+                else None
+            )
+        }

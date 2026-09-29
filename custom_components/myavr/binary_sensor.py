@@ -16,7 +16,11 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from . import MyAVRConfigEntry
 from .const import (
+    OIL_SERVICE_THRESHOLD_MIN,
+    REG_ENGINE_HOURS_CURRENT,
+    REG_ENGINE_HOURS_SETPOINT,
     REG_ERROR_FIRST,
+    REG_ERROR_OIL_SERVICE,
     REG_NO_ERRORS,
     REG_PREVENTIVE_START_FLAG,
     REG_SCHEDULE_ENABLED,
@@ -98,8 +102,13 @@ async def async_setup_entry(
     """Set up MyAVR binary sensors."""
     coordinator = entry.runtime_data
     async_add_entities(
-        MyAVRBinarySensor(coordinator, entry.entry_id, description)
-        for description in ALL_BINARY_SENSORS
+        [
+            MyAVROilServiceDueBinarySensor(coordinator, entry.entry_id),
+            *(
+                MyAVRBinarySensor(coordinator, entry.entry_id, description)
+                for description in ALL_BINARY_SENSORS
+            ),
+        ]
     )
 
 
@@ -127,3 +136,28 @@ class MyAVRBinarySensor(MyAVREntity, BinarySensorEntity):
         if raw is None:
             return None
         return self.entity_description.value_fn(raw)
+
+
+class MyAVROilServiceDueBinarySensor(MyAVREntity, BinarySensorEntity):
+    """Oil service warning derived from the interval and controller error."""
+
+    _attr_translation_key = "oil_service_due"
+    _attr_device_class = BinarySensorDeviceClass.PROBLEM
+
+    def __init__(self, coordinator: MyAVRCoordinator, entry_id: str) -> None:
+        """Initialize the binary sensor."""
+        super().__init__(coordinator, entry_id)
+        self._attr_unique_id = f"{entry_id}_oil_service_due"
+        self.entity_id = ENTITY_ID_FORMAT.format("myavr_oil_service_due")
+
+    @property
+    def is_on(self) -> bool | None:
+        """Return true when oil service is due or less than 60 minutes away."""
+        if self.coordinator.data.get(REG_ERROR_OIL_SERVICE) == 1:
+            return True
+
+        current = self.coordinator.data.get(REG_ENGINE_HOURS_CURRENT)
+        setpoint = self.coordinator.data.get(REG_ENGINE_HOURS_SETPOINT)
+        if current is None or setpoint is None:
+            return None
+        return setpoint - current <= OIL_SERVICE_THRESHOLD_MIN

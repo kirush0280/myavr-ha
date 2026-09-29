@@ -37,7 +37,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: MyAVRConfigEntry) -> boo
         entry.data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
     )
 
-    coordinator = MyAVRCoordinator(hass, client, scan_interval)
+    coordinator = MyAVRCoordinator(hass, client, scan_interval, entry.entry_id)
+    await coordinator.async_load_run_state()
     await coordinator.async_config_entry_first_refresh()
 
     entry.runtime_data = coordinator

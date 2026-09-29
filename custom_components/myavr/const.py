@@ -13,6 +13,9 @@ DEFAULT_SCAN_INTERVAL: Final = 15
 
 CONF_DEVICE_ID: Final = "device_id"
 
+# Remaining engine hours at which the oil service becomes due.
+OIL_SERVICE_THRESHOLD_MIN: Final = 60
+
 # Manufacturer / model reported by the controller over SNMP sysDescr.
 MANUFACTURER: Final = "MyAVR.ru"
 MODEL: Final = "ATS controller"
@@ -46,6 +49,8 @@ REG_INV_BATTERY_MAX: Final = 30021
 REG_START_COMMAND_SENT: Final = 30022
 REG_ERROR_FIRST: Final = 30023
 REG_ERROR_LAST: Final = 30042
+# Controller error 6: OilService interval reached.
+REG_ERROR_OIL_SERVICE: Final = REG_ERROR_FIRST + 5
 REG_NO_ERRORS: Final = 30099
 REG_MAINS_FREQ: Final = 30100
 REG_MAINS_FREQ_TOLERANCE: Final = 30101
@@ -61,6 +66,9 @@ REG_STARTS_TOTAL: Final = 30110
 REG_SCHEDULE_ENABLED: Final = 30111
 REG_SCHEDULE_INHIBIT: Final = 30112
 REG_CONTACTOR_POSITION: Final = 30113
+
+# Raw contactor register value while the load is powered by the generator.
+CONTACTOR_GENERATOR: Final = 3
 
 # Contiguous read blocks (start_register, count).
 # Reading in blocks keeps polling fast and avoids per-register round trips.
